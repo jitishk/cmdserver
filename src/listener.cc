@@ -1,8 +1,8 @@
 #include <logger.h>
 #include <listener.h>
-
-#include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h> 
 
 namespace jserver {
 
@@ -38,7 +38,8 @@ void Listener::listen() {
 
 	char buffer[1024] = {0};
 	recv(clientSocket, buffer, sizeof(buffer), 0);
-	jlog("buffer");
+	jlog(buffer);
+	close(clientSocket);
 }
 
 } // namespace jserver

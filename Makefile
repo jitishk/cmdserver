@@ -1,27 +1,36 @@
 
-OBJ_DIR := obj
-BIN_DIR := bin
-SRC_DIR := src
-INC_DIR := inc
+ODIR := obj
+BDIR := bin
+SDIR := src
+IDIR := inc
 CC_VER := c++23
 
-CC_FLAGS := -std=$(CC_VER) 
+COPTS := -std=$(CC_VER) 
+CFLAGS := -g
+CC := g++
 
-bin/server: obj/server.o obj/Listener.o | bin
-	g++ $(CC_FLAGS) $(OBJ_DIR)/server.o $(OBJ_DIR)/listener.o -o $(BIN_DIR)/server
+SERVER_SRCS := server.cc listener.cc
+CLIENT_SRCS := client.cc tx.cc
 
-obj/server.o: src/server.cc | obj
-	g++ $(CC_FLAGS) -I$(INC_DIR)/ -c $(SRC_DIR)/server.cc -o $(OBJ_DIR)/server.o
+all: jserver jclient
 
-obj/Listener.o: src/listener.cc | obj
-	g++ $(CC_FLAGS) -I$(INC_DIR)/ -c $(SRC_DIR)/listener.cc -o $(OBJ_DIR)/listener.o
+jserver: $(addprefix $(ODIR)/, $(SERVER_SRCS:.cc=.o))
+	$(CC) $(CC_FLAGS) $(COPTS) $? -o $(BDIR)/$@
 
-obj:
-	mkdir -p $@
+jclient: $(addprefix $(ODIR)/, $(CLIENT_SRCS:.cc=.o))
+	$(CC) $(CFLAGS) $(COPTS) $? -o $(BDIR)/$@
 
-bin:
+$(ODIR)/%.o: $(SDIR)/%.cc
+	$(CC) $(CFLAGS) $(COPTS) -I$(IDIR) -c $< -o $@
+
+%.cc:
+	# echo $@
+
+.PHONY: all
+
+obj bin:
 	mkdir -p $@
 
 clean:
-	rm $(OBJ_DIR)/* $(BIN_DIR)/*
+	@rm -f $(ODIR)/* $(BDIR)/* # 2>/dev/null
 	

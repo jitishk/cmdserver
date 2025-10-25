@@ -5,7 +5,7 @@ jinfra::logger::LOG jlog;
 
 int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]]) {
 
-  jlog("main");
+  jlog("server");
   jserver::Listener listener;
 
   listener.listen();
