@@ -1,7 +1,13 @@
+#include <logger.h>
+#include <listener.h>
 
-#include <iostream>
+jinfra::logger::LOG jlog;
 
 int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]]) {
-    std::cout << "Hello World!" << std::endl;
-    return 0;
+
+  jlog("main");
+  jserver::Listener listener;
+
+  listener.listen();
+  return 0;
 }
