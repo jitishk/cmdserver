@@ -8,7 +8,7 @@
 #include <unistd.h> 
 
 
-namespace jserver::tx {
+namespace jserver {
 
 jinfra::logger::LOG jlog;
 
@@ -39,4 +39,4 @@ int Tx::send(const jinfra::buffer::Buffer& buffer) const {
 	return bytesSent;
 }
 
-} // namespace jserver::tx
+} // namespace jserver

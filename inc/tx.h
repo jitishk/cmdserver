@@ -3,13 +3,13 @@
 
 #include <buffer.h>
 
-namespace jserver::tx {
+namespace jserver {
 
 class Tx {
 public:
 	int send(const jinfra::buffer::Buffer& buffer) const;
 };
 
-} // namespace jserver::tx
+} // namespace jserver
 
 #endif // __TX_H__

@@ -8,7 +8,7 @@ jinfra::logger::LOG jlog;
 int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]]) {
 
   jlog("client");
-  jserver::tx::Tx tx;
+  jserver::Tx tx;
 	jinfra::buffer::Buffer buffer;
 
 	strncpy(buffer.data, "Hello PiOne", sizeof(buffer.data));

@@ -9,8 +9,8 @@ COPTS := -std=$(CC_VER)
 CFLAGS := -g
 CC := g++
 
-SERVER_SRCS := server.cc rx.cc
-CLIENT_SRCS := client.cc tx.cc
+SERVER_SRCS := server.cc rx.cc channel.cc
+CLIENT_SRCS := client.cc tx.cc channel.cc
 
 all: jserver jclient
 
