@@ -1,13 +1,13 @@
 #include <logger.h>
-#include <listener.h>
+#include <rx.h>
 
 jinfra::logger::LOG jlog;
 
 int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]]) {
 
   jlog("server");
-  jserver::Listener listener;
+  jserver::Rx rx;
 
-  listener.listen();
+  rx.listen();
   return 0;
 }

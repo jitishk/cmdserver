@@ -1,5 +1,5 @@
 #include <logger.h>
-#include <listener.h>
+#include <rx.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h> 
@@ -8,8 +8,8 @@ namespace jserver {
 
 jinfra::logger::LOG jlog;
 
-void Listener::listen() {
-  jlog("listener");
+void Rx::listen() {
+  jlog("rx");
   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (serverSocket == -1) {
     jlog("server socket error");
