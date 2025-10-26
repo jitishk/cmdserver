@@ -1,7 +1,9 @@
 #include <logger.h>
 #include <rx.h>
 
+namespace {
 jinfra::logger::LOG jlog;
+}
 
 int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]]) {
 

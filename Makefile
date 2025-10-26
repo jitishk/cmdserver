@@ -9,22 +9,29 @@ COPTS := -std=$(CC_VER)
 CFLAGS := -g
 CC := g++
 
-SERVER_SRCS := server.cc rx.cc channel.cc
-CLIENT_SRCS := client.cc tx.cc channel.cc
+SERVER_SRCS := server.cc 
+CLIENT_SRCS := client.cc
+LIBCHANNEL_SRCS := channel.cc rx.cc tx.cc
 
 all: jserver jclient
 
-jserver: $(addprefix $(ODIR)/, $(SERVER_SRCS:.cc=.o))
+jserver: $(addprefix $(ODIR)/, $(SERVER_SRCS:.cc=.o)) $(ODIR)/libchannel.so
 	$(CC) $(CC_FLAGS) $(COPTS) $? -o $(BDIR)/$@
 
-jclient: $(addprefix $(ODIR)/, $(CLIENT_SRCS:.cc=.o))
+jclient: $(addprefix $(ODIR)/, $(CLIENT_SRCS:.cc=.o)) $(ODIR)/libchannel.so
 	$(CC) $(CFLAGS) $(COPTS) $? -o $(BDIR)/$@
 
+
+$(ODIR)/libchannel.so: $(addprefix $(ODIR)/, $(LIBCHANNEL_SRCS:.cc=.o))
+	gcc -shared $^ -o $@
+
 $(ODIR)/%.o: $(SDIR)/%.cc
-	$(CC) $(CFLAGS) $(COPTS) -I$(IDIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(COPTS) -I$(IDIR) -fPIC -c $< -o $@
 
 %.cc:
 	# echo $@
+
+channel.so: $(SDIR)/
 
 .PHONY: all
 

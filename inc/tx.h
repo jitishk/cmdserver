@@ -5,9 +5,11 @@
 
 namespace jserver {
 
+using jinfra::buffer::Buffer;
+
 class Tx {
 public:
-	int send(const jinfra::buffer::Buffer& buffer) const;
+	int send(const Buffer& buffer) const;
 };
 
 } // namespace jserver

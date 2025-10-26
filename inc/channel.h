@@ -7,14 +7,17 @@
 
 namespace jserver {
 
+using jinfra::buffer::Buffer;
+using jinfra::status::Status;
+
 class Channel {
 	private:
-		Tx tx;
-		Rx rx;
+		Tx tx_;
+		Rx rx_;
 	public:
-		jinfra::status::Status init();
-		jinfra::status::Status send();
-		jinfra::status::Status listen();
+		Status init();
+		Status send(const Buffer& buffer) const;
+		Status recv(Buffer& buffer);
 };
 
 } // namespace jserver

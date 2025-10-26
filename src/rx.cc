@@ -6,7 +6,9 @@
 
 namespace jserver {
 
+namespace {
 jinfra::logger::LOG jlog;
+}
 
 void Rx::listen() {
   jlog("rx");

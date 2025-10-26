@@ -10,9 +10,13 @@
 
 namespace jserver {
 
+namespace {
 jinfra::logger::LOG jlog;
+}
 
-int Tx::send(const jinfra::buffer::Buffer& buffer) const {
+using jinfra::buffer::Buffer;
+
+int Tx::send(const Buffer& buffer) const {
 	int clientSocket = socket(AF_INET, SOCK_STREAM, 0); // For TCP/IPv4
 	if (clientSocket == -1) {
 		jlog("socket error");		
