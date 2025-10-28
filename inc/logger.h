@@ -1,4 +1,4 @@
-#ifndef __LOGGER_H_
+#ifndef __LOGGER_H__
 #define __LOGGER_H__
 
 #include <iostream>

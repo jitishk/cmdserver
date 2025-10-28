@@ -3,7 +3,8 @@
 
 namespace jinfra::buffer {
 
-struct Buffer {
+struct [[gnu::packed]] Buffer {
+	ChannelID cID;
 	char data[1024];
 };
 

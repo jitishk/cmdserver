@@ -15,10 +15,10 @@ LIBCHANNEL_SRCS := channel.cc rx.cc tx.cc
 
 all: jserver jclient
 
-jserver: $(addprefix $(ODIR)/, $(SERVER_SRCS:.cc=.o)) $(ODIR)/libchannel.so
+jserver: $(addprefix $(ODIR)/, $(SERVER_SRCS:.cc=.o))
 	$(CC) $(CC_FLAGS) $(COPTS) $? -o $(BDIR)/$@
 
-jclient: $(addprefix $(ODIR)/, $(CLIENT_SRCS:.cc=.o)) $(ODIR)/libchannel.so
+jclient: $(addprefix $(ODIR)/, $(CLIENT_SRCS:.cc=.o))
 	$(CC) $(CFLAGS) $(COPTS) $? -o $(BDIR)/$@
 
 

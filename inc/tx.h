@@ -1,15 +1,13 @@
 #ifndef __TX_H__
 #define __TX_H__
 
-#include <buffer.h>
+#include <cstddef>
 
 namespace jserver {
 
-using jinfra::buffer::Buffer;
-
 class Tx {
 public:
-	int send(const Buffer& buffer) const;
+	int send(const char* buffer, size_t buf_size) const;
 };
 
 } // namespace jserver

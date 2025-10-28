@@ -1,3 +1,8 @@
+// TODO
+// - handle error
+// - factory create or init, and handle create errors.
+// - ability to respond from the client code.
+
 #include <logger.h>
 #include <rx.h>
 #include <netinet/in.h>
@@ -10,38 +15,34 @@ namespace {
 jinfra::logger::LOG jlog;
 }
 
-void Rx::listen() {
-  jlog("rx");
-  int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-  if (serverSocket == -1) {
+Rx::Rx(int port) {
+	if ((sockfd_ = socket(AF_INET, SOCK_DGRAM, 0)  == -1) {
     jlog("server socket error");
   }
 
-	sockaddr_in serverAddress;
-	serverAddress.sin_family = AF_INET;
-	serverAddress.sin_port = htons(5665); // Example port
-	serverAddress.sin_addr.s_addr = INADDR_ANY; // Listen on all available interfaces
-	if (bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
-    jlog("bind error");
+	sockaddr_in servaddr = {0};
+	servaddr.sin_family = AF_INET;
+	servaddr.sin_port = htons(port);
+	servaddr.sin_addr.s_addr = INADDR_ANY;
+	if (bind(sockfd_, (const struct sockaddr *)&servaddr, sizeof(servaddr)) == -1) {
+		jlog("bind error");
 	}
+}
 
-	if (::listen(serverSocket, 5) == -1) { // 5 is the backlog queue size
-		jlog("listen error");
-	}
+Rx::~Rx() {
+	close(sockfd_);
+}
 
+void Rx::listen(char* buffer, size_t buf_size) {
 	jlog("listening...");
 
-	sockaddr_in clientAddress;
-  socklen_t clientLen = sizeof(clientAddress);
-  int clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddress, &clientLen);
-  if (clientSocket == -1) {
-		jlog("accept error");
-  }
+	sockaddr_in clientaddr = {0};
+	int len = sizeof(clientaddr);
+	int n = recvfrom(sockfd_, buffer, buf_size, MSG_WAITALL,
+							(struct sockaddr *) &clientaddr, &len)
 
-	char buffer[1024] = {0};
-	recv(clientSocket, buffer, sizeof(buffer), 0);
-	jlog(buffer);
-	close(clientSocket);
+ 	// sendto(sockfd, (const char *)buffer, buff_size, MSG_CONFIRM,
+	//	(const struct sockaddr *) &cliaddr, len); 
 }
 
 } // namespace jserver

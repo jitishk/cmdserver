@@ -1,11 +1,18 @@
 #ifndef __RX_H__
 #define __RX_H__
 
+#include <cstddef>
+
 namespace jserver {
 
 class Rx {
 public:
-	void listen();
+	Rx(int port);
+	~Rx();
+	void listen(char* buffer, size_t buf_size);
+private:
+	int sockfd_;
+	
 };
 
 } // namespace jserver

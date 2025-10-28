@@ -7,8 +7,17 @@
 
 namespace jserver {
 
-using jinfra::buffer::Buffer;
 using jinfra::status::Status;
+
+enum class ChannelID : char {
+	CH_INVALID = 0,
+	CH_SYSTEM
+};
+
+struct Buffer {
+	ChannelID id;
+	char data[1024];
+};
 
 class Channel {
 	private:
