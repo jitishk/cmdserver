@@ -9,7 +9,7 @@ COPTS := -std=$(CC_VER)
 CFLAGS := -g
 CC := g++
 
-SERVER_SRCS := server.cc 
+SERVER_SRCS := server.cc message.cc
 CLIENT_SRCS := client.cc
 LIBCHANNEL_SRCS := channel.cc rx.cc tx.cc
 

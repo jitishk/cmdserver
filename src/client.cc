@@ -2,6 +2,8 @@
 #include <channel.h>
 #include <cstring>
 
+#include <message.h>
+
 #include <arpa/inet.h>
 #include <logger.h>
 #include <netinet/in.h>
@@ -49,19 +51,25 @@ ssize_t Client::send(char* buffer, size_t buf_size) {
 	return n;
 }
 
+using jnet::message::Message;
+
 int main(int argc [[maybe_unused]], char* argv[] [[maybe_unused]]) {
 
   jlog("client");
 
-	jserver::Buffer buffer;	
-	buffer.id = jserver::ChannelID::CH_SYSTEM;
-	strncpy(buffer.data, "Hello PiOne", sizeof(buffer.data));
-
+	// jserver::Buffer buffer;	
 	Client client("10.0.0.57", 12345);
+	while (true) {
+		std::string cmdline;
+		std::cout << "jsk >> ";
+		int len = std::getline(std::cin, cmdline, '\n');
+		jnet::message::Message msg(Message::MsgType::ECHO, cmdline.c_str(), cmdline.size());
+		// buffer.id = jserver::ChannelID::CH_SYSTEM;
+		// strncpy(buffer.data, "Hello PiOne", sizeof(buffer.data));
+		// client.send(buffer.data, sizeof(buffer.data));
+		client.send(msg.GetMsg(), msg.GetMsgLen());
+		jlog(msg.GetMsg());
+	}
 
-	client.send(buffer.data, sizeof(buffer.data));
-
-	jlog(buffer.data);
-
-  return 0;
+	return 0;
 }
